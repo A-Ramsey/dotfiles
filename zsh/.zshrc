@@ -37,7 +37,7 @@ auto_nvm_use() {
 }
 
 add-zsh-hook chpwd auto_nvm_use
-
+nvm use default
 
 export PATH="/opt/nvim-linux64/bin:$PATH"
 
