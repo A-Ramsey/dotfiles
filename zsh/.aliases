@@ -1,0 +1,83 @@
+alias ducks='du -cks * | sort -rn | head'
+
+# improved version of du -sh
+duf() {
+    du -sk * | sort -n | perl -ne '($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'
+}
+
+find_recent_modified_files() {
+    find . -type f -printf "%T@ %Tc %p\n" | sort -n
+}
+
+find_recent_modified_php_files() {
+    find . -type f -name "*.php" -printf "%T@ %Tc %p\n" | sort -n
+}
+
+
+blue='\033[0;36m'
+clear='\033[0m'
+
+info() {
+    echo -e "ℹ️ ${blue} Info:${clear} $1"
+}
+
+# Define a function named cat
+cat() {
+  # Check if batcat exists
+  if command -v batcat >/dev/null 2>&1; then
+    # Use batcat with all passed arguments
+    batcat --style=plain "$@"
+  else
+    # Fallback to the default cat command
+    command cat "$@"
+  fi
+}
+
+# local overrides
+[[ -f ~/.aliases.local ]] && source ~/.aliases.local
+
+alias projects='cd /home/gloversure/projects'
+alias welshcowsay="cowsay -f dragon"
+alias unixcornsay="cowsay -f unipony"
+alias hosts="grep -P \"^Host ([^*]+)$\" $HOME/.ssh/config | sed 's/Host //'"
+alias :q="exit"
+alias :Q="exit"
+alias :qa="exit"
+alias :Qa="exit"
+alias :QA="exit"
+alias :q!="exit"
+alias :Q!="exit"
+alias :qa!="exit"
+alias :Qa!="exit"
+alias :QA!="exit"
+alias :wq!="exit"
+alias :wq="exit"
+alias :wqa!="exit"
+alias :wqa="exit"
+alias :Wq!="exit"
+alias :WQ!="exit"
+alias :Wqa!="exit"
+alias :WQa!="exit"
+alias :WQA!="exit"
+alias nvimconfig="cd ~/.config/nvim/lua/user/"
+alias projects="cd ~/projects/"
+alias qq="exit"
+alias c="clear"
+alias tw="tmuxifier w"
+alias tlw="tmuxifier lw"
+alias ts="tmuxifier s"
+alias tls="tmuxifier ls"
+alias t="tmuxifier"
+
+#Overriding default commands with better alternatives but still leaving the original available
+alias cat="batcat"
+alias bat="batcat"
+alias catp="batcat -p"
+alias batp="batcat -p"
+alias catplain="batcat -p"
+alias batplain="batcat -p"
+alias realcat="/usr/bin/cat"
+
+alias man="tldr"
+alias realman="/usr/bin/man"
+
