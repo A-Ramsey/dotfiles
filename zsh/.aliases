@@ -26,7 +26,7 @@ cat() {
   # Check if batcat exists
   if command -v batcat >/dev/null 2>&1; then
     # Use batcat with all passed arguments
-    batcat --style=plain "$@"
+    batcat "$@"
   else
     # Fallback to the default cat command
     command cat "$@"

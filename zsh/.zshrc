@@ -5,7 +5,7 @@ export PATH=~/.composer/vendor/bin:$PATH
 # preferred theme
 ZSH_THEME="gentoo"
 
-plugins=(git ssh-agent)
+plugins=(git ssh-agent zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -23,6 +23,7 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 export PATH="$PATH:/usr/cli-tool/"
 export PATH="$PATH:/opt/nvim-linux64/bin"
 export TMUXIFIER_LAYOUT_PATH="$HOME/dotfiles/tmux-layouts"
+ZSH_AUTOSUGGEST_STRATEGY=match_prev_cmd
 
 autoload -U add-zsh-hook
 
@@ -41,6 +42,6 @@ nvm use default
 
 export PATH="/opt/nvim-linux64/bin:$PATH"
 
-bindkey "^[k" up-line-or-history
-bindkey "^[j" down-line-or-history
+set -o vi true
 
+export QT_QPA_PLATFORM=xcb
