@@ -20,10 +20,14 @@ export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/h
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-export PATH="$PATH:/usr/cli-tool/"
 export PATH="$PATH:/opt/nvim-linux64/bin"
-export TMUXIFIER_LAYOUT_PATH="$HOME/dotfiles/tmux-layouts"
+export PATH="$HOME/.tmuxifier/bin:$PATH"
+export TMUXIFIER_LAYOUT_PATH="$HOME/dotfiles/tmux/layouts"
 ZSH_AUTOSUGGEST_STRATEGY=match_prev_cmd
+
+[[ -d /usr/local/go ]] && export GOROOT="/usr/local/go"
+[[ -d /usr/local/go ]] && export GOPATH="$HOME/go"
+[[ -d /usr/local/go ]] && export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 
 autoload -U add-zsh-hook
 
