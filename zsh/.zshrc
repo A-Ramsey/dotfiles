@@ -49,3 +49,5 @@ export PATH="/opt/nvim-linux64/bin:$PATH"
 set -o vi true
 
 export QT_QPA_PLATFORM=xcb
+
+eval "$(starship init zsh)"
