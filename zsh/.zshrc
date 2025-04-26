@@ -26,7 +26,7 @@ export TMUXIFIER_LAYOUT_PATH="$HOME/dotfiles/tmux/layouts"
 ZSH_AUTOSUGGEST_STRATEGY=match_prev_cmd
 
 [[ -d /usr/local/go ]] && export GOROOT="/usr/local/go"
-[[ -d /usr/local/go ]] && export GOPATH="$HOME/projects/go"
+[[ -d /usr/local/go ]] && export GOPATH="$HOME/go"
 [[ -d /usr/local/go ]] && export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 
 autoload -U add-zsh-hook
