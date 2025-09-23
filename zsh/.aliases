@@ -36,7 +36,22 @@ cat() {
 # local overrides
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
 
-alias projects='cd /home/gloversure/projects'
+projects() {
+  local dir="$(find ~/projects -maxdepth 1 -type d -not -path '.' -not -path '/home/$USER/projects' |fzf --preview 'ls -lah {}')"
+  if [[ -z "$dir" ]]; then
+    return 1;
+  fi
+  info "Changing directory to $dir"
+  cd "$dir"
+}
+shh() {
+  local cmd="$(find *.sh -maxdepth 1 -type f | fzf --preview 'batcat -p {}')";
+  if [[ -z "$cmd" ]]; then
+    return 1;
+  fi
+  info "Running $cmd";
+  "./$cmd"
+}
 alias welshcowsay="cowsay -f dragon"
 alias unixcornsay="cowsay -f unipony"
 alias hosts="grep -P \"^Host ([^*]+)$\" $HOME/.ssh/config | sed 's/Host //'"
@@ -60,7 +75,6 @@ alias :Wqa!="exit"
 alias :WQa!="exit"
 alias :WQA!="exit"
 alias nvimconfig="cd ~/.config/nvim/lua/user/"
-alias projects="cd ~/projects/"
 alias qq="exit"
 alias c="clear"
 alias tw="tmuxifier w"
