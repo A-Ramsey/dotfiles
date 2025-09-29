@@ -2,9 +2,6 @@
   template = ~/.gitmessage
 [include]
   path = ~/.gitconfig.local
-[user]
-  email = aaronramsey2000@gmail.com
-	name = Aaron Ramsey
 [core]
 	pager = batcat
 [push]
@@ -13,4 +10,5 @@
 	rebase = false
 [safe]
 	directory = *
-
+[include]
+	path = ~/.gitme

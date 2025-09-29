@@ -22,7 +22,7 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export PATH="$PATH:/opt/nvim-linux64/bin"
-export PATH="$HOME/.tmuxifier/bin:$PATH"
+export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
 export TMUXIFIER_LAYOUT_PATH="$HOME/dotfiles/tmux/layouts"
 ZSH_AUTOSUGGEST_STRATEGY=match_prev_cmd
 
