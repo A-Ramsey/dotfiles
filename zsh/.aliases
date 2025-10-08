@@ -45,7 +45,7 @@ cat() {
 # local overrides
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
 
-alias projects="~/dotfiles/zsh/scripts/fzf_projects.sh"
+alias projects=". ~/dotfiles/zsh/scripts/fzf_projects.sh"
 alias shh="~/dotfiles/zsh/scripts/fzf_commands.sh"
 alias welshcowsay="cowsay -f dragon"
 alias unixcornsay="cowsay -f unipony"
