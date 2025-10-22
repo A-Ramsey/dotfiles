@@ -42,6 +42,21 @@ cat() {
   fi
 }
 
+ai() {
+    if [ -p /dev/stdin ]; then
+        question=$(cat)
+    else
+        ~/dotfiles/zsh/scripts/messages.sh question "Ask ai what"
+        read -r question
+    fi
+    ~/dotfiles/zsh/scripts/messages.sh success "Redirecting to AI"
+    if [[ WORK -eq 1 ]]; then
+        sensible-browser "https://gpt.forgehg.cloud/c/new?q=$question"
+    else
+        sensible-browser "https://chat.openai.com/?q=$question"
+    fi
+}
+
 # local overrides
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
 
@@ -77,6 +92,8 @@ alias tlw="tmuxifier lw"
 alias ts="tmuxifier s"
 alias tls="tmuxifier ls"
 alias t="tmuxifier"
+
+alias gsm="git switch master"
 
 #Overriding default commands with better alternatives but still leaving the original available
 alias cat="batcat"

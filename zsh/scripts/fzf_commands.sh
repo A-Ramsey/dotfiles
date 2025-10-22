@@ -7,6 +7,8 @@ main() {
     return 1;
   fi
   local cmd="$(find *.sh -maxdepth 1 | fzf --preview 'batcat -p {}')";
+  # Add a check to see if it is running localtests and if it is fzf over all the tests
+  # and add that as a --filter to the command
   if [[ -z "$cmd" ]]; then
     return 1;
   fi
