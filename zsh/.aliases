@@ -60,6 +60,8 @@ ai() {
 # local overrides
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
 
+alias installterminaltheme='bash -c "$(wget -qO- https://git.io/vQgMr)"'
+alias switch="~/dotfiles/zsh/scripts/fzf_switch.sh"
 alias projects=". ~/dotfiles/zsh/scripts/fzf_projects.sh"
 alias shh="~/dotfiles/zsh/scripts/fzf_commands.sh"
 alias welshcowsay="cowsay -f dragon"
@@ -84,7 +86,7 @@ alias :WQ!="exit"
 alias :Wqa!="exit"
 alias :WQa!="exit"
 alias :WQA!="exit"
-alias nvimconfig="cd ~/.config/nvim/lua/user/"
+alias nvimconfig="cd ~/.config/nvim/"
 alias qq="exit"
 alias c="clear"
 alias tw="tmuxifier w"

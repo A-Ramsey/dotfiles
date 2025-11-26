@@ -13,11 +13,11 @@ split_h 25
 # Run commands.
 #run_cmd "top"     # runs in active pane
 #run_cmd "date" 1  # runs in pane 1
-run_cmd "if [ -f ./start.sh ]; then 
+run_cmd " if [ -f ./start.sh ]; then 
   ./start.sh 
-else
-  clear
-fi"
+  history -s './start.sh'
+fi
+clear"
 run_cmd "nvim" 1
 
 # Paste text

@@ -11,6 +11,9 @@ source $ZSH/oh-my-zsh.sh
 
 export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighters
 
+wslinfo --version > /dev/null 2>&1
+export IS_WSL=$(( ! $? ))
+
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
 
@@ -30,19 +33,22 @@ ZSH_AUTOSUGGEST_STRATEGY=match_prev_cmd
 [[ -d /usr/local/go ]] && export GOPATH="$HOME/go"
 [[ -d /usr/local/go ]] && export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 
-autoload -U add-zsh-hook
-
-auto_nvm_use() {
-  if ! command -v nvm &> /dev/null; then
-    return
-  fi
-  if [[ -f .nvmrc && -r .nvmrc ]]; then
-    info "Found .nvmrc file: Switching node version to $(cat .nvmrc)"
-    nvm use > /dev/null
-  fi
-}
-
-add-zsh-hook chpwd auto_nvm_use
+# autoload -U add-zsh-hook
+#
+# auto_nvm_use() {
+#   if [[ -z DISABLE_ZSH_AUTO_CHANGE ]]; then
+#     return
+#   fi
+#   if ! command -v nvm &> /dev/null; then
+#     return
+#   fi
+#   if [[ -f .nvmrc && -r .nvmrc ]]; then
+#     info "Found .nvmrc file: Switching node version to $(cat .nvmrc)"
+#     nvm use > /dev/null
+#   fi
+# }
+#
+# add-zsh-hook chpwd auto_nvm_use
 nvm use default
 
 export PATH="/opt/nvim-linux64/bin:$PATH"

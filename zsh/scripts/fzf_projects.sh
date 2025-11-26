@@ -24,7 +24,7 @@ main() {
     return 0;
   fi
   ~/dotfiles/zsh/scripts/messages.sh "info" "Changing directory to $dir";
-  tmux rename-window "$windowName"
+  # tmux rename-window "$windowName"
   cd "$dir"
 }
 
