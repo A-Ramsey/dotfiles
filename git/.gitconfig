@@ -5,6 +5,7 @@
 [core]
 	pager = batcat
 	excludesfile = ~/.gitignore-global
+	hooksPath = ~/.githooks
 [push]
 	autoSetupRemote = true
 [pull]

@@ -26,6 +26,7 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 export PATH="$PATH:/opt/nvim-linux64/bin"
 export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
+export PATH="$PATH:$HOME/.local/bin"
 export TMUXIFIER_LAYOUT_PATH="$HOME/dotfiles/tmux/layouts"
 ZSH_AUTOSUGGEST_STRATEGY=match_prev_cmd
 
