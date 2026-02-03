@@ -1,1 +1,1 @@
-echo "Make sure you run ./qa.sh and check if the tests pass in the pipeline before putting a PR out"
+~/dotfiles/zsh/scripts/messages.sh "warning" "Make sure you run ./qa.sh and check if the tests pass in the pipeline before putting a PR out"

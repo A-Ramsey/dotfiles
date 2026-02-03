@@ -1,5 +1,15 @@
 #!/usr/bin/bash
 
+create=false
+
+getFlags() {
+	while getopts "c" flag; do
+		case "${flag}" in
+		c) create=true ;;
+		esac
+	done
+}
+
 gitCheck() {
 	git fetch --quiet
 	local branchStatus="$(git status -sb)"
@@ -7,9 +17,34 @@ gitCheck() {
 	return 0
 }
 
+newBranchFromTicket() {
+	local tickets=$(~/dotfiles/zsh/scripts/get_active_jira_tickets.php)
+
+	# Preselect if only one match in fzf
+	local preselectTest="$(echo "$tickets" | fzf --filter "$1" --select-1 --exit-0)"
+	local preselectOptions="$(echo "$preselectTest" | wc -l)"
+	if [ "$preselectOptions" -eq 1 ] && [ -n "$preselectTest" ]; then
+		git switch -c "$preselectTest"
+		return $?
+	fi
+
+	local newbranch=$(
+		(
+			echo "$tickets"
+		) | fzf -q "$1"
+	)
+	if [ -z "$newbranch" ]; then
+		~/dotfiles/zsh/scripts/messages.sh "error" "No ticket selected, aborting"
+		return 1
+	fi
+	git switch -c $newbranch
+	~/dotfiles/zsh/scripts/messages.sh "success" "Created and switched to new branch $newbranch"
+	return 0
+}
+
 newBranch() {
 	~/dotfiles/zsh/scripts/messages.sh "question" "Enter new branch name"
-	read newbranch
+	read -e -i "$1" newbranch
 	if [ -z "$newbranch" ]; then
 		~/dotfiles/zsh/scripts/messages.sh "error" "No branch name provided, aborting"
 		return 1
@@ -23,6 +58,10 @@ changeBranch() {
 	local branch="$1"
 	if [ "$branch" == "New Branch" ]; then
 		newBranch
+		return $?
+	fi
+	if [ "$branch" == "From Ticket" ]; then
+		newBranchFromTicket
 		return $?
 	fi
 
@@ -45,10 +84,17 @@ main() {
 		return 0
 	fi
 
-	if [ "$1" == "new" ] || [ "$1" == "New" ] || [ "$1" == "NEW" ]; then
-		newBranch
+	if [ "$1" == "new" ] || [ "$1" == "New" ] || [ "$1" == "NEW" ] || [ "$1" == "-c" ]; then
+		newBranch "$2"
 		return $?
 	fi
+
+	if [ "$1" == "ticket" ] || [ "$1" == "Ticket" ] || [ "$1" == "TICKET" ] || [ "$1" == "-t" ]; then
+		newBranchFromTicket "$2"
+		return $?
+	fi
+
+	getFlags
 
 	local branches="$(git branch -l | sed 's/..//')"
 
@@ -69,6 +115,7 @@ main() {
 	local branch="$(
 		(
 			echo "New Branch"
+			echo "From Ticket"
 			echo "$branches"
 		) | fzf -q "$1" --preview "
   if [ {} = 'New Branch' ]; then
@@ -86,4 +133,4 @@ main() {
 	return 0
 }
 
-main "$1"
+main "$1" "$2"
