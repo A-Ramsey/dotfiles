@@ -17,6 +17,11 @@ gitCheck() {
 	return 0
 }
 
+
+filterBranchName() {
+	echo "$1" | sed 's/\[[^]]*\]//g' | tr -s '-'
+}
+
 newBranchFromTicket() {
 	local tickets=$(~/dotfiles/zsh/scripts/get_active_jira_tickets.php)
 
@@ -33,6 +38,7 @@ newBranchFromTicket() {
 			echo "$tickets"
 		) | fzf -q "$1"
 	)
+	newbranch=$(filterBranchName "$newbranch")
 	if [ -z "$newbranch" ]; then
 		~/dotfiles/zsh/scripts/messages.sh "error" "No ticket selected, aborting"
 		return 1
@@ -66,6 +72,9 @@ changeBranch() {
 	fi
 
 	~/dotfiles/zsh/scripts/messages.sh "info" "Changing branch"
+	if [[ "$branch" == origin/* ]]; then
+		branch="${branch#origin/}"
+	fi
 	git switch $branch --quiet
 	if [ $? -ne 0 ]; then
 		~/dotfiles/zsh/scripts/messages.sh "error" "Failed to switch to branch $branch"
@@ -97,9 +106,14 @@ main() {
 	getFlags
 
 	local branches="$(git branch -l | sed 's/..//')"
+	local remotebranches="$(git branch -r | sed 's/..//')"
 
 	# Preselect if only one match in fzf
-	local preselectTest="$(echo "$branches" | fzf --filter "$1" --select-1 --exit-0)"
+	local preselectTest="$(
+		(
+			echo "$branches"
+			echo "$remotebranches"
+		) | fzf --filter "$1" --select-1 --exit-0)"
 	local preselectOptions="$(echo "$preselectTest" | wc -l)"
 	if [ "$preselectOptions" -eq 1 ] && [ -n "$preselectTest" ]; then
 		changeBranch "$preselectTest"
@@ -117,6 +131,7 @@ main() {
 			echo "New Branch"
 			echo "From Ticket"
 			echo "$branches"
+			echo "$remotebranches"
 		) | fzf -q "$1" --preview "
   if [ {} = 'New Branch' ]; then
     echo '🍃 Create a new branch.\n\nPress Enter to continue…'

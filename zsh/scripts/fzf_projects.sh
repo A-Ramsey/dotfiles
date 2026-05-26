@@ -9,7 +9,18 @@ while getopts ':w' flag; do
 done
 
 main() {
-	local dir="$(find ~/projects/ -maxdepth 1 -type d -not -path '.' -not -path '/home/$USER/projects' | fzf --preview 'ls -lah {}')"
+	local projects=$(find ~/projects/ -maxdepth 1 -type d -not -path '.' -not -path '/home/$USER/projects')
+	local personalprojects=$(find ~/personal-projects/ -maxdepth 1 -type d -not -path '.' -not -path '/home/$USER/personal-projects')
+	local tools=$(find ~/tools/ -maxdepth 1 -type d -not -path '.' -not -path '/home/$USER/tools')
+	local dir="$(
+		(
+			echo "$projects"
+			echo "$personalprojects"
+			echo "$tools"
+			echo "~/notes"
+			echo "~/dotfiles"
+			echo "~/.config/nvim"
+		) | fzf --preview 'ls -lah {}')"
 	if [[ -z "$dir" ]]; then
 		return 1
 	fi
